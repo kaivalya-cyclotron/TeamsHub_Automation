@@ -77,13 +77,12 @@ public class SmokeTests {
 		System.setProperty("webdriver.chrome.driver", "BrowserDrivers/chromedriver.exe");
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, 30);
-		//test111111111111
 	}
 
 	@BeforeClass
 	public void init() 
 	{
-		driver.get("https://teamsweb.azurewebsites.net/");
+		driver.get("https://teamswebstaging.azurewebsites.net/");
 		driver.manage().window().maximize();	
 	}
 	
@@ -202,8 +201,7 @@ public class SmokeTests {
 	}
  
 	
-	/*
-	//@Test(priority = 2)
+	@Test(priority = 2)
 	public void TC_02_Team_Request() throws InterruptedException {
 		System.out.println("---------------------------------------------------------");
 
@@ -220,13 +218,13 @@ public class SmokeTests {
 		//System.out.println("name is "+teamrequesttype);
 		
 		createT.typeOwnersPeoplePicker("kunal");
-		createT.typeDisplayName("Automation Team ID_12");
+		createT.typeDisplayName("DevOps Team ID_1");
 		createT.typeDescription("This is sample team Request");
-		createT.typeAliasName("Automation Team ID_12");
+		createT.typeAliasName("DevOps Team ID_1");
 		// createT.clickOwnerSelection();
 
 		Thread.sleep(12000);
-		//createT.clickSubmitButton();
+		createT.clickSubmitButton();
 
 		System.out.println("TC_02_Team_Request Result: ");
 		System.out.println("Team Request sent to admin");
@@ -245,7 +243,7 @@ public class SmokeTests {
 		System.out.println("TC_03_Approve_Request Result: ");
 				
 		//approve.TeamRequestSection();
-		driver.get("https://teamsweb.azurewebsites.net/#TeamRequests");		
+		driver.get("https://teamswebstaging.azurewebsites.net/#TeamRequests");		
 		Thread.sleep(3000);
 
 		JavascriptExecutor jse1 = (JavascriptExecutor) driver;
@@ -267,7 +265,7 @@ public class SmokeTests {
 
 		Thread.sleep(4000);
 		
-		driver.get("https://teamsweb.azurewebsites.net");
+		driver.get("https://teamswebstaging.azurewebsites.net");
 		
 		HomePage homep = new HomePage(driver, wait);
 
@@ -290,6 +288,7 @@ public class SmokeTests {
 
 	}
 
+	/*
 	@Test(priority = 5)
 	public void TC_12_Apply_Tag() throws InterruptedException
 	{
@@ -331,6 +330,7 @@ public class SmokeTests {
 		
 		}
 	
+	*/
 	
 	@Test(priority = 5)
 	public void TC_05_Mark_As_A_Favorite() throws InterruptedException {
@@ -392,7 +392,7 @@ public class SmokeTests {
 	@Test(priority = 7)
 	public void TC_07_CheckHub_Data() throws InterruptedException {
 		Thread.sleep(4000);
-		driver.get("https://teamsweb.azurewebsites.net/#MyHubs/AccountHub");
+		driver.get("https://teamswebstaging.azurewebsites.net/#MyHubs/AccountHub");
 
 		Thread.sleep(10000);
 
@@ -538,7 +538,6 @@ public class SmokeTests {
 		 driver.close();
 	}
 	
-	*/
 	
 	 
 
