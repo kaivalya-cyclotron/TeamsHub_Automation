@@ -77,7 +77,7 @@ public class SmokeTests {
 		System.setProperty("webdriver.chrome.driver", "BrowserDrivers/chromedriver.exe");
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, 30);
-		//test1111111
+		//test11111111
 	}
 
 	@BeforeClass
