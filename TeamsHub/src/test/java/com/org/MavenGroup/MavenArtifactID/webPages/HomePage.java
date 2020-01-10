@@ -18,7 +18,7 @@ public class HomePage {
 	WebDriver driver;
 	WebDriverWait wait;
 	
-	By searchText = By.xpath("//input[@placeholder='Search for Teams']");
+	By searchText = By.xpath("//input[@placeholder='Search Teams by name, tags, classification']");
 	
 
 	public HomePage(WebDriver driver, WebDriverWait wait)

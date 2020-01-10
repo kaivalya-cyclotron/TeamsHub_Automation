@@ -211,9 +211,9 @@ public class SmokeTests {
 		createT.clickCreateTeamButton();
 		
 		createT.typeOwnersPeoplePicker("kunal");
-		createT.typeDisplayName("DevOps Team ID_2");
+		createT.typeDisplayName("DevOps Team ID_4");
 		createT.typeDescription("This is sample team Request");
-		createT.typeAliasName("DevOps Team ID_2");
+		createT.typeAliasName("DevOps Team ID_4");
 		// createT.clickOwnerSelection();
 
 		Thread.sleep(12000);
@@ -251,6 +251,7 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 
 	}
+	
 	
 
 	@Test(priority = 4)
@@ -471,6 +472,8 @@ public class SmokeTests {
 
 	}
 
+	
+	/*
 	@Test(priority = 10)
 	public void TC_10_Check_NewsLetter() throws Exception {
 		Properties props = System.getProperties();
@@ -526,7 +529,7 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 	}
 
-
+*/
 	@AfterTest
 	public void terminateBrowser() {
 		 driver.close();
