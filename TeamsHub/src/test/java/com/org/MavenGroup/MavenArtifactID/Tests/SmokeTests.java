@@ -204,24 +204,16 @@ public class SmokeTests {
 	
 	@Test(priority = 2)
 	public void TC_02_Team_Request() throws InterruptedException {
-		System.out.println("---------------------------------------------------------");
+		
 
 		CreateTeamPanel createT = new CreateTeamPanel(driver, wait);	
 		
 		createT.clickCreateTeamButton();
 		
-		System.out.println("---------------------------------------------------------");
-		
-		//String teamrequesttype = driver.findElement(By.xpath("//p[contains(@id,'headerText')]")).getText();
-		
-		//String actualTeamTitle = driver.findElement(By.xpath("//*[text()='Cyclotron Dev']")).getText();
-		
-		//System.out.println("name is "+teamrequesttype);
-		
 		createT.typeOwnersPeoplePicker("kunal");
-		createT.typeDisplayName("DevOps Team ID_1");
+		createT.typeDisplayName("DevOps Team ID_2");
 		createT.typeDescription("This is sample team Request");
-		createT.typeAliasName("DevOps Team ID_1");
+		createT.typeAliasName("DevOps Team ID_2");
 		// createT.clickOwnerSelection();
 
 		Thread.sleep(12000);
@@ -243,7 +235,7 @@ public class SmokeTests {
 		
 		System.out.println("TC_03_Approve_Request Result: ");
 				
-		//approve.TeamRequestSection();
+		approve.TeamRequestSection();
 		driver.get("https://teamswebstaging.azurewebsites.net/#TeamRequests");		
 		Thread.sleep(3000);
 
@@ -521,6 +513,7 @@ public class SmokeTests {
 
 					if (mailBody.contains("Announcement")) {
 						System.out.println("NewsLetter Receieved");
+						Thread.sleep(10000);
 					} else {
 						Assert.fail("Newsletter not receieved");
 					}
