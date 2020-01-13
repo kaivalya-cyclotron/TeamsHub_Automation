@@ -63,12 +63,8 @@ import junit.framework.Assert;
  * @author Kaivalya
  *
  */
-
-//now lets commit and push this code
-
 public class SmokeTests {
-	
-	
+
 	public WebDriver driver;
 	public WebDriverWait wait;
 	public List <String> list;
@@ -80,7 +76,6 @@ public class SmokeTests {
 		System.setProperty("webdriver.chrome.driver", "BrowserDrivers/chromedriver.exe");
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, 30);
-		//Test DevOps
 	}
 
 	@BeforeClass
@@ -214,9 +209,9 @@ public class SmokeTests {
 		createT.clickCreateTeamButton();
 		
 		createT.typeOwnersPeoplePicker("kunal");
-		createT.typeDisplayName("DevOps Team ID_4");
+		createT.typeDisplayName("DevOps Team ID_10");
 		createT.typeDescription("This is sample team Request");
-		createT.typeAliasName("DevOps Team ID_4");
+		createT.typeAliasName("DevOps Team ID_10");
 		// createT.clickOwnerSelection();
 
 		Thread.sleep(12000);
