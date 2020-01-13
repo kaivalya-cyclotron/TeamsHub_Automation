@@ -16,7 +16,7 @@ public class TeamRequests {
 	
 	By TeamRequestSection = By.cssSelector("[title^='Team Requests']");
 	By PendingApproval = By.xpath("//*[text()='Pending Approval']");
-	By ApproveButton = By.xpath("//td[text()='DevOps Team ID_10']/following-sibling::td/i[1]");
+	By ApproveButton = By.xpath("//td[text()='DevOps Team ID_11']/following-sibling::td/i[1]");
 	
 	public TeamRequests(WebDriver driver, WebDriverWait wait)
 	{

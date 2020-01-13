@@ -63,7 +63,7 @@ import junit.framework.Assert;
  * @author Kaivalya
  *
  */
-//run this maven build using DevOps pipeline
+//Run this maven build using DevOps pipeline
 public class SmokeTests {
 
 	public WebDriver driver;
@@ -210,9 +210,9 @@ public class SmokeTests {
 		createT.clickCreateTeamButton();
 		
 		createT.typeOwnersPeoplePicker("kunal");
-		createT.typeDisplayName("DevOps Team ID_10");
+		createT.typeDisplayName("DevOps Team ID_11");
 		createT.typeDescription("This is sample team Request");
-		createT.typeAliasName("DevOps Team ID_10");
+		createT.typeAliasName("DevOps Team ID_11");
 		// createT.clickOwnerSelection();
 
 		Thread.sleep(12000);
