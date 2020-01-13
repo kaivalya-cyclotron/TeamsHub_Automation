@@ -63,6 +63,7 @@ import junit.framework.Assert;
  * @author Kaivalya
  *
  */
+//run this maven build using DevOps pipeline
 public class SmokeTests {
 
 	public WebDriver driver;
