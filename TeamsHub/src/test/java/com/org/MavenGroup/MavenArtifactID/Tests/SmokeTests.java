@@ -65,7 +65,7 @@ import junit.framework.Assert;
  */
 //Run this maven build using DevOps pipeline
 public class SmokeTests {
-
+	
 	public WebDriver driver;
 	public WebDriverWait wait;
 	public List <String> list;
@@ -82,7 +82,7 @@ public class SmokeTests {
 	@BeforeClass
 	public void init() 
 	{
-		driver.get("https://teamswebstaging.azurewebsites.net/");
+		driver.get("https://teamswebstaging.azurewebsites.net/#teams");
 		driver.manage().window().maximize();	
 	}
 	
@@ -187,8 +187,8 @@ public class SmokeTests {
 		// Switch back to original browser (first window)
 		driver.switchTo().window(window1);
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Home')]")));
-		boolean isOnHome = driver.getPageSource().contains("Home");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Dashboard')]")));
+		boolean isOnHome = driver.getPageSource().contains("Dashboard");
 	
 		System.out.println("TC_01_LogIn Result: ");
 
@@ -200,39 +200,131 @@ public class SmokeTests {
 
 	}
  
-	
 	@Test(priority = 2)
-	public void TC_02_Team_Request() throws InterruptedException {
+	public void TC_02_Team_Request_Setting() throws InterruptedException 
+	{ 
 		
-
+		Thread.sleep(12000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Settings')]")).click();
+		Thread.sleep(10000);
+		
+		List<WebElement> setting_options = driver.findElements(By.xpath("//span[contains(@class,'settingItemSectionTitle')]"));
+		setting_options.get(3).click();
+		
+		Thread.sleep(10000);
+		driver.findElement(By.xpath("//input[contains(@id,'Yes')]")).click();
+		
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Accept')]")).click();
+	
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Cancel')]")).click();
+		
+		Thread.sleep(4000);
 		CreateTeamPanel createT = new CreateTeamPanel(driver, wait);	
-		
 		createT.clickCreateTeamButton();
 		
-		createT.typeOwnersPeoplePicker("kunal");
-		createT.typeDisplayName("DevOps Team ID_11");
+		Thread.sleep(2000);
+		String header_value = driver.findElement(By.xpath("//p[contains(@role,'heading')]")).getText();
+		//System.out.println(header_value);
+		
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Cancel')]")).click();
+		
+		String expectedheader = "Team Request";
+
+		System.out.println("TC_02_Team_Request_Setting Result: ");
+		
+		if (header_value.equalsIgnoreCase(expectedheader))
+			System.out.println("Automation site provision on TeamsHub is enabled");
+		else
+			Assert.fail("Failed to enable automation site provision on TeamsHub");
+
+		System.out.println("---------------------------------------------------------");
+		
+	}
+	
+	
+	@Test(priority = 3)
+	public void TC_3_Set_Custom_Blocked_Word() throws InterruptedException 
+	{
+		
+		System.out.println("TC_03_Set_Custom_Blocked_Word Result: ");
+		Thread.sleep(12000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Settings')]")).click();
+		Thread.sleep(10000);
+		
+		List<WebElement> setting_options = driver.findElements(By.xpath("//span[contains(@class,'settingItemSectionTitle')]"));
+		setting_options.get(2).click();
+		
+		Thread.sleep(8000);
+		String CustomBlockedWordList = driver.findElement(By.id("txtCustomBlockedWordList")).getText();
+		//System.out.println(CustomBlockedWordList);
+		
+		if(!CustomBlockedWordList.contains("Blocked")) 
+		{	
+		driver.findElement(By.id("txtCustomBlockedWordList")).sendKeys("Blocked");
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Accept')]")).click();
+		System.out.println("Blocked keyword is set");
+		}
+		else
+		{
+			System.out.println("keyword- blocked is already set");
+		}
+		
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Cancel')]")).click();
+		System.out.println("---------------------------------------------------------");
+		
+	}
+	
+	@Test(priority = 4)
+	public void TC_04_Team_Request() throws InterruptedException
+	{
+		Thread.sleep(4000);
+		CreateTeamPanel createT = new CreateTeamPanel(driver, wait);		
+		createT.clickCreateTeamButton();
+		
+		createT.typeOwnersMembersPeoplePicker("kunal","kaivalya");
+		createT.typeDisplayName("Blocked Team");
 		createT.typeDescription("This is sample team Request");
-		createT.typeAliasName("DevOps Team ID_11");
+		createT.typeAliasName("Blocked Team");
 		// createT.clickOwnerSelection();
 
 		Thread.sleep(12000);
 		createT.clickSubmitButton();
 
-		System.out.println("TC_02_Team_Request Result: ");
-		System.out.println("Team Request sent to admin");
-
+		System.out.println("TC_04_Team_Request Result: ");
+			
+		Thread.sleep(1000);
+		String actualTeamTitle1 = driver.findElement(By.xpath("//*[contains(@class,'ct-toast')]")).getText();
+		System.out.println("Notification Recieved :" +actualTeamTitle1);
+		
+		if(actualTeamTitle1.contains("Blocked")) 
+		{	
+			driver.findElement(By.xpath("//i[contains(@data-icon-name,'clear')]")).click();
+			Thread.sleep(12000);
+			System.out.println("Team can not be requested with blocked keywords");
+		}
+		else
+		{
+			System.out.println("Team Request sent to admin");
+		}
+		
+		
 		System.out.println("---------------------------------------------------------");
+		
 	}
 	
-	
- 
-	@Test(priority = 3)
-	public void TC_03_Approve_Request() throws InterruptedException
+	/*
+	@Test(priority = 5)
+	public void TC_05_Approve_Request() throws InterruptedException
 	{
 		
 		TeamRequests approve = new TeamRequests(driver, wait);
 		
-		System.out.println("TC_03_Approve_Request Result: ");
+		System.out.println("TC_04_Approve_Request Result: ");
 				
 		approve.TeamRequestSection();
 		driver.get("https://teamswebstaging.azurewebsites.net/#TeamRequests");		
@@ -252,25 +344,29 @@ public class SmokeTests {
 	}
 	
 	
+	*/
 
-	@Test(priority = 4)
-	public void TC_04_Search() throws InterruptedException {
+	@Test(priority = 6)
+	public void TC_06_Search() throws InterruptedException {
 
 		Thread.sleep(4000);
 		
-		driver.get("https://teamswebstaging.azurewebsites.net");
+		driver.get("https://teamswebstaging.azurewebsites.net/#Teams");
 		
 		HomePage homep = new HomePage(driver, wait);
 
 		Thread.sleep(4000);
-		homep.typeSearch("Cyclotron Dev");
+		homep.typeSearch("Automation Team 2020");
 
-		System.out.println("TC_04_Search Result: ");
+		System.out.println("TC_06_Search Result: ");
 
-		String actualTeamTitle = driver.findElement(By.xpath("//*[text()='Cyclotron Dev']")).getText();
+		String actualTeamTitle = driver.findElement(By.xpath("//*[text()='Automation Team 2020']")).getText();
+		
+		//String actualTeamTitle = driver.findElement(By.xpath("//div[contains(@class,'ms-Persona-primaryText')]")).getText();
+		
 		System.out.println("Team name identified in search result : " + actualTeamTitle);
 
-		String expectedTitle = "Cyclotron Dev";
+		String expectedTitle = "Automation Team 2020";
 
 		if (actualTeamTitle.equalsIgnoreCase(expectedTitle))
 			System.out.println("Search results are correct");
@@ -281,12 +377,63 @@ public class SmokeTests {
 
 	}
 
-	/*
-	@Test(priority = 5)
-	public void TC_12_Apply_Tag() throws InterruptedException
+	
+	@Test(priority = 7)
+	public void TC_07_Add_Channel() throws InterruptedException 
 	{
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'More')]")).click();
+		
+		Thread.sleep(12000);
+		driver.findElement(By.xpath("//*[text()='Manage Channel']")).click();
+		
+		Thread.sleep(8000);
+		driver.findElement(By.xpath("//*[text()='Create']")).click();
+		
+		Thread.sleep(8000);
+		driver.findElement(By.id("txtChannelName")).sendKeys("Automation Team");
+		
+		Thread.sleep(8000);
+		driver.findElement(By.xpath("//*[text()='Add']")).click();
+		
+		System.out.println("TC_07_Add_Channel Result: ");
+		
+		Thread.sleep(8000);
+		List<WebElement> all_channels = driver.findElements(By.xpath("//div[contains(@role,'gridcell')]"));
+		
+		int channelcount = all_channels.size() ;
+				
+		int channelcount1 = channelcount-1;
+		String gridcellvalue = all_channels.get(channelcount1).getText();	
+	
+		System.out.println("Last channel name : " +gridcellvalue);
+		
+       if(gridcellvalue.contains("Automation Team"))
+	    {
+			System.out.println("channel added successfully");
+	    } 
+		else
+		{
+			Assert.fail("channel is not added");
+		}
+			
+		Thread.sleep(8000);
+		driver.findElement(By.xpath("//i[contains(@data-icon-name,'Cancel')]")).click();
+		//driver.findElement(By.xpath("//div[contains(@data-icon-name,'Cancel')]")).click();
+		
+		System.out.println("---------------------------------------------------------");
+	}
+	
+	
+	
+	
+	@Test(priority = 8)
+	public void TC_08_Apply_Tag() throws InterruptedException
+	{
+		
+
 		 Thread.sleep(2000);
-		 String appliedtag = "SharePoint";
+		 String appliedtag = "Sharepoint";
 	     driver.findElement(By.xpath("//i[contains(@data-icon-name,'Tag')]")).click();
 	     Thread.sleep(2000);
 	     driver.findElement(By.xpath("//*[contains(@class,'edit-tag')]")).click();
@@ -295,21 +442,17 @@ public class SmokeTests {
 	     Thread.sleep(2000);
 	     driver.findElement(By.xpath("//*[contains(@role,'heading')]")).click();
 	     
-	 	 /*String SaveTagButton = "Save";
-	 	 By SaveTagButtonClick = (By.xpath("//button[contains(.,'" + SaveTagButton + "')]"));
-	 	 wait.until(ExpectedConditions.visibilityOfElementLocated(SaveTagButtonClick));
-	 	 driver.findElement(SaveTagButtonClick).click();
-	 	 
-	 	 
 	     
-	    String SaveTagButton = "Save"; 
-	 	WebElement element = driver.findElement(By.xpath("//button[contains(.,'" + SaveTagButton + "')]"));
-	 	Actions actions = new Actions(driver);
-	 	actions.moveToElement(element).click().build().perform();
+	     Thread.sleep(4000);
+	     driver.findElement(By.xpath("//button[contains(@class,'ms-Button ms-Button--primary')]")).click();
 	     
+	 	    
 	     Thread.sleep(5000);
 	     driver.findElement(By.xpath("//i[contains(@data-icon-name,'Tag')]")).click();
 	     String tagdata = driver.findElement(By.xpath("//div[contains(@class,'tags')]")).getText();
+	     
+	     
+	     System.out.println("TC_08_Apply_Tag Result: ");
 	     System.out.println("Teams Tag Data = " + tagdata);
 	     
 			if (tagdata.contains(appliedtag)) 
@@ -321,18 +464,19 @@ public class SmokeTests {
 				Assert.fail("Applied tag is not found");
 			}
 		
+			System.out.println("---------------------------------------------------------");
 		}
 	
-	*/
 	
-	@Test(priority = 5)
-	public void TC_05_Mark_As_A_Favorite() throws InterruptedException {
+	
+	@Test(priority = 9)
+	public void TC_09_Mark_As_A_Favorite() throws InterruptedException {
 
 		Thread.sleep(8000);
 		WebElement element = driver.findElement(By.xpath("//button[@id='favoriteId']/div/i"));
 		String elementval = element.getAttribute("data-icon-name");
 
-		System.out.println("TC_05_Mark_As_A_Favorite Result: ");
+		System.out.println("TC_09_Mark_As_A_Favorite Result: ");
 
 		if (elementval.equals("SingleBookmark")) {
 			element.click();
@@ -353,8 +497,8 @@ public class SmokeTests {
 
 	}
 
-	@Test(priority = 6)
-	public void TC_06_Save_Hub() throws InterruptedException 
+	@Test(priority = 10)
+	public void TC_10_Save_Hub() throws InterruptedException 
 	{
 		
 		driver.navigate().refresh();
@@ -373,7 +517,7 @@ public class SmokeTests {
 
 		boolean isHub = driver.getPageSource().contains("Account Hub");
 
-		System.out.println("TC_06_Save_Hub Result: ");
+		System.out.println("TC_10_Save_Hub Result: ");
 
 		if (isHub == true)
 			System.out.println("Hub Saved and Verified");
@@ -382,14 +526,14 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 	}
 
-	@Test(priority = 7)
-	public void TC_07_CheckHub_Data() throws InterruptedException {
+	@Test(priority = 11)
+	public void TC_11_CheckHub_Data() throws InterruptedException {
 		Thread.sleep(4000);
 		driver.get("https://teamswebstaging.azurewebsites.net/#MyHubs/AccountHub");
 
 		Thread.sleep(10000);
 
-		System.out.println("TC_07_CheckHub_Data Result: ");
+		System.out.println("TC_11_CheckHub_Data Result: ");
 
 		String searchKeyword = "Account";
 
@@ -404,7 +548,7 @@ public class SmokeTests {
 
 			System.out.println("Team Name : " + teamname.get(i + 1).getText());
 			if (teamname.get(i + 1).getText().contains(searchKeyword)) {
-				System.out.println("Team name matched with " + searchKeyword + "keyword");
+				System.out.println("Team name matched with " + searchKeyword + " keyword");
 			} else {
 				tags.get(i).click();
 				Thread.sleep(2000);
@@ -413,7 +557,7 @@ public class SmokeTests {
 				driver.findElement(By.xpath("//i[contains(@data-icon-name,'KnowledgeArticle')]")).click();
 
 				if (tagdata.contains(searchKeyword)) {
-					System.out.println("One of the tag matched wih " + searchKeyword + "keyword");
+					System.out.println("One of the tag matched wih " + searchKeyword + " keyword");
 				} else {
 					Assert.fail("Team name/tag not matched - Test Case Failed");
 				}
@@ -424,12 +568,12 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 	}
 
-	@Test(priority = 8)
-	public void TC_08_Send_NewsLetter() throws InterruptedException {
+	@Test(priority = 12)
+	public void TC_12_Send_NewsLetter() throws InterruptedException {
 		Thread.sleep(4000);
 		NewsLetter news = new NewsLetter(driver, wait);
 
-		System.out.println("TC_08_Send_NewsLetter Result: ");
+		System.out.println("TC_12_Send_NewsLetter Result: ");
 
 		news.selectNewsLetterSection();
 
@@ -453,12 +597,12 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 	}
 
-	@Test(priority = 9)
-	public void TC_09_Send_Feedback() throws InterruptedException {
+	@Test(priority = 13)
+	public void TC_13_Send_Feedback() throws InterruptedException {
 		Thread.sleep(4000);
 		Feedback obj = new Feedback(driver, wait);
 
-		System.out.println("TC_09_Send_Feedback Result:");
+		System.out.println("TC_13_Send_Feedback Result:");
 
 		obj.ClickGiveFeedbackButton();
 		Thread.sleep(3000);
@@ -471,10 +615,8 @@ public class SmokeTests {
 
 	}
 
-	
-	/*
-	@Test(priority = 10)
-	public void TC_10_Check_NewsLetter() throws Exception {
+	@Test(priority = 14)
+	public void TC_14_Check_NewsLetter() throws Exception {
 		Properties props = System.getProperties();
 		props.setProperty("mail.store.protocol", "imap");
 		props.setProperty("mail.imap.ssl.enable", "true");
@@ -489,7 +631,7 @@ public class SmokeTests {
 		Folder folder = store.getFolder("INBOX");
 		folder.open(Folder.READ_WRITE);
 
-		System.out.println("TC_10_Check_NewsLetter Result:");
+		System.out.println("TC_14_Check_NewsLetter Result:");
 
 		System.out.println("Total Message:" + folder.getMessageCount());
 		System.out.println("Unread Message:" + folder.getUnreadMessageCount());
@@ -528,13 +670,11 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 	}
 
-*/
+
 	@AfterTest
 	public void terminateBrowser() {
 		 driver.close();
 	}
-	
-	
-	 
+		 
 
 }

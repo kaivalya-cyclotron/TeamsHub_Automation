@@ -24,7 +24,8 @@ WebDriverWait wait;
 	By DisplayName = By.id("txtTeamName");
 	By Description = By.id("txtTeamDescription");
 	By AliasName = By.id("txtNickName");
-	By OwnersPeoplePicker = By.xpath("/html/body/div[2]/div/div/div/div[2]/div[3]/div[2]/div/div/div[5]/div/div/div/div/div/input");
+	By OwnersPeoplePicker = By.xpath("//input[contains(@class,'BasePicker')]");
+	
 	By OwnersSelection  = By.xpath("/html/body/div[3]/div/div/div/div/div/div[3]/div[1]/div/button/div");
 	
 	
@@ -52,10 +53,11 @@ WebDriverWait wait;
 		driver.findElement(AliasName).sendKeys(alias);
 	}
 	
-	public void typeOwnersPeoplePicker(String ownerPicker)
+	public void typeOwnersMembersPeoplePicker(String ownerPicker, String memberPicker)
 	{
 		wait.until(ExpectedConditions.visibilityOfElementLocated(OwnersPeoplePicker));
-		driver.findElement(OwnersPeoplePicker).sendKeys(ownerPicker);
+		driver.findElements(OwnersPeoplePicker).get(0).sendKeys(ownerPicker);
+		driver.findElements(OwnersPeoplePicker).get(1).sendKeys(memberPicker);
 	}
 	
 

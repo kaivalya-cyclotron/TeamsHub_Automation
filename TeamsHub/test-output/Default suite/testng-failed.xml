@@ -6,8 +6,9 @@
       <class name="com.org.MavenGroup.MavenArtifactID.Tests.SmokeTests">
         <methods>
           <include name="setup"/>
-          <include name="TC_01_LogIn"/>
           <include name="init"/>
+          <include name="TC_14_Check_NewsLetter"/>
+          <include name="terminateBrowser"/>
         </methods>
       </class> <!-- com.org.MavenGroup.MavenArtifactID.Tests.SmokeTests -->
     </classes>

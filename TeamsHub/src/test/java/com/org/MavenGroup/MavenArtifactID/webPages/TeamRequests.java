@@ -13,10 +13,9 @@ public class TeamRequests {
 	
 	// Identify all elements
 	
-	
 	By TeamRequestSection = By.cssSelector("[title^='Team Requests']");
 	By PendingApproval = By.xpath("//*[text()='Pending Approval']");
-	By ApproveButton = By.xpath("//td[text()='DevOps Team ID_11']/following-sibling::td/i[1]");
+	By ApproveButton = By.xpath("//td[text()='Automation Team 1106']/following-sibling::td/i[1]");
 	
 	public TeamRequests(WebDriver driver, WebDriverWait wait)
 	{
@@ -41,10 +40,6 @@ public class TeamRequests {
 	{
 		wait.until(ExpectedConditions.visibilityOfElementLocated(ApproveButton));
 		driver.findElement(ApproveButton).click();
-	}
-	
-
-	
-		
+	}	
 
 }
