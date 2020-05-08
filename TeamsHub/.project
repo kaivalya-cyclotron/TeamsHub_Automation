@@ -20,4 +20,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>BrowserDrivers/chromedriver1.exe</name>
+			<type>1</type>
+			<location>C:/Users/kaiva/Downloads/chromedriver_win32/chromedriver.exe</location>
+		</link>
+	</linkedResources>
 </projectDescription>

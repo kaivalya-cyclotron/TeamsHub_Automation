@@ -5,9 +5,11 @@
     <classes>
       <class name="com.org.MavenGroup.MavenArtifactID.Tests.SmokeTests">
         <methods>
-          <include name="TC_02_Team_Request_Setting"/>
           <include name="setup"/>
+          <include name="TC_01_LogIn"/>
           <include name="init"/>
+          <include name="CheckLoadTime"/>
+          <include name="terminateBrowser"/>
         </methods>
       </class> <!-- com.org.MavenGroup.MavenArtifactID.Tests.SmokeTests -->
     </classes>

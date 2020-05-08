@@ -201,6 +201,18 @@ public class SmokeTests {
 	}
  
 	@Test(priority = 2)
+	public void CheckLoadTime() throws InterruptedException 
+	{ 
+		String CreateTeamButtonlabel = "Create a Team";
+		By CreateTeamButton = (By.xpath("//button[contains(.,'" + CreateTeamButtonlabel + "')]"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(CreateTeamButton));
+		String buttonname = driver.findElement(By.id("//button[contains(.,'" + CreateTeamButtonlabel + "')]")).getText();
+		System.out.println(buttonname);
+	}
+	
+	/*
+	
+	@Test(priority = 2)
 	public void TC_02_Team_Request_Setting() throws InterruptedException 
 	{ 
 		
@@ -344,7 +356,7 @@ public class SmokeTests {
 	}
 	
 	
-	*/
+
 
 	@Test(priority = 6)
 	public void TC_06_Search() throws InterruptedException {
@@ -670,10 +682,12 @@ public class SmokeTests {
 		System.out.println("---------------------------------------------------------");
 	}
 
-
+ 
+ 	*/
+	
 	@AfterTest
 	public void terminateBrowser() {
-		 driver.close();
+		// driver.close();
 	}
 		 
 
